@@ -251,6 +251,11 @@ nav {
     margin: 0 auto;
     padding: 3rem 1.5rem 5rem;
     border-top: 1px solid var(--border);
+    /* intro text on the left, form on the right */
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 4rem;
+    align-items: start;
 }
 
 .book-shoot h2 {
@@ -259,15 +264,12 @@ nav {
     margin-bottom: 0.5rem;
 }
 
-.book-shoot>p:not(.eyebrow) {
-    max-width: 32rem;
+.book-shoot-intro p:not(.eyebrow) {
     color: var(--secondary-text);
 }
 
 /* two fields per row on desktop */
 .booking-form {
-    margin-top: 2rem;
-    max-width: 44rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem 1.5rem;
@@ -441,6 +443,12 @@ footer {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2.5rem;
+    }
+
+    /* book a shoot: intro text goes above the form */
+    .book-shoot {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     /* about: photo stacks above the text */
