@@ -13,6 +13,9 @@
     --secondary-text: #77736d;
     --accent: #9a7b5b;
     --border: #dedad3;
+    --accent-dark: #72583e;
+    --surface: #ffffff;
+    --button-text: #fdfdfd;
     --font-body: "Inter", sans-serif;
     --font-heading: "Libre Baskerville", serif;
 }
@@ -97,43 +100,24 @@ nav {
 }
 
 /*hero*/
-.hero {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 640px;
-    overflow: hidden;
-}
-
-/* photo fills the whole hero, behind the text */
-.hero-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 60% bottom;
-}
-
-/* soft fade from the page colour so the text stays readable over the shadow */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(to right,
-            var(--bg) 0%,
-            rgba(247, 246, 242, 0.9) 30%,
-            rgba(247, 246, 242, 0) 60%);
-}
-
+/* headline on the left, intro + button on the right, both sitting on one baseline */
 .hero-text {
-    position: relative;
-    z-index: 2;
-    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 5rem 1.5rem 4rem;
+    padding: 3.5rem 1.5rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    align-items: end;
+}
+
+/* wide, edge-to-edge photo under the text */
+.hero-image {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    max-height: 500px;
+    object-fit: cover;
+    object-position: 60% 90%;
 }
 
 .eyebrow {
@@ -149,10 +133,11 @@ nav {
     font-size: 3.5rem;
     line-height: 1.05;
     font-weight: 700;
-    max-width: 30rem;
 }
 
+/* "Creating Memories" always starts on its own line */
 .hero h1 span {
+    display: block;
     color: var(--accent);
 }
 
@@ -169,7 +154,7 @@ nav {
     margin-top: 2rem;
     padding: 0.85rem 1.7rem;
     background: var(--accent);
-    color: rgb(253, 253, 253);
+    color: var(--button-text);
     font-weight: 575;
     border-radius: 3px;
     text-transform: uppercase;
@@ -178,7 +163,7 @@ nav {
 }
 
 .btn:hover {
-    background: #72583e;
+    background: var(--accent-dark);
     transform: translateY(-1px);
 }
 
@@ -195,6 +180,10 @@ nav {
     margin-bottom: 1.5rem;
 }
 
+.sessions > p {
+    margin-bottom: 2rem;
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -203,39 +192,27 @@ nav {
 
 .product-card {
     border: 1px solid var(--border);
-    border-radius: 1rem;
+    border-radius: 3.5px;
     overflow: hidden;
-    transition: box-shadow 0.15s;
-}
-
-.product-card:hover {
-    box-shadow: 0 8px 25px rgba(36, 26, 20, 0.08);
 }
 
 .product-image {
     width: 100%;
-    height: 180px;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
 }
 
 .product-card h3 {
     font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 1rem 1rem 0.25rem;
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin: 1.25rem 1.25rem 0.4rem;
 }
 
-.product-card .category {
-    font-size: 0.8rem;
+.product-card p {
+    font-size: 0.9rem;
     color: var(--secondary-text);
-    margin: 0 1rem;
-}
-
-.product-card .price {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin: 0.5rem 1rem 1rem;
+    margin: 0 1.25rem 1.5rem;
 }
 
 /*about*/
@@ -244,6 +221,17 @@ nav {
     margin: 0 auto;
     padding: 3rem 1.5rem 4rem;
     border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    max-height: 480px;
 }
 
 .about h2 {
@@ -271,7 +259,7 @@ nav {
     margin-bottom: 0.5rem;
 }
 
-.book-shoot > p:not(.eyebrow) {
+.book-shoot>p:not(.eyebrow) {
     max-width: 32rem;
     color: var(--secondary-text);
 }
@@ -308,7 +296,7 @@ nav {
     font: inherit;
     font-size: 0.95rem;
     color: var(--primary-text);
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 0;
     padding: 0.75rem 0.9rem;
@@ -336,7 +324,7 @@ nav {
 /*footer*/
 footer {
     border-top: 1px solid var(--border);
-    background: white;
+    background: var(--surface);
 }
 
 .footer-grid {
@@ -455,6 +443,12 @@ footer {
         gap: 2.5rem;
     }
 
+    /* about: photo stacks above the text */
+    .about {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
     /* gallery: simple 2-column grid with equal rows */
     .gallery-grid {
         height: auto;
@@ -472,28 +466,20 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    /* stack: photo on top, text underneath */
-    .hero {
-        flex-direction: column;
-        min-height: auto;
-    }
-
-    .hero::before {
-        display: none;
+    /* hero: intro text drops under the headline, photo becomes less wide */
+    .hero-text {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 3rem 1.5rem 2.5rem;
     }
 
     .hero-image {
-        position: static;
-        order: -1;
-        height: 380px;
-    }
-
-    .hero-text {
-        padding: 3rem 1.5rem;
+        aspect-ratio: 3 / 2;
     }
 }
 
 @media (max-width: 640px) {
+
     /* form fields stack into one column */
     .booking-form {
         grid-template-columns: 1fr;
@@ -522,11 +508,11 @@ footer {
     }
 
     .hero-text {
-        padding: 2.5rem 1.5rem;
+        padding: 2.5rem 1.5rem 2rem;
     }
 
     .hero-image {
-        height: 300px;
+        aspect-ratio: 4 / 3;
     }
 
     .hero h1 {
