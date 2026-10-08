@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luma Photography</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -14,7 +19,9 @@
             <a href="#" class="logo">Luma <span>Photography</span></a>
             <ul class="nav-links">
                 <li><a href="#hero">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#sessions">Sessions</a></li>
                 <li><a href="#book-shoot">Book a Shoot</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -22,16 +29,38 @@
     </header>
     <main>
         <section id="hero" class="hero">
-            <p class="eyebrow">Welcome to Luma Photography</p>
-            <h1 class="hero-title">Capturing Moments, <span>Creating Memories</span></h1>
-            <p class="subtext">Explore our collection of stunning photographs that capture the beauty of the world
-                around
-                us.</p>
-            <a href="#book-shoot" class="btn">Book a Shoot</a>
+            <div class="hero-text">
+                <p class="eyebrow">Welcome to Luma Photography</p>
+                <h1 class="hero-title">Capturing Moments, <span>Creating Memories</span></h1>
+                <p class="subtext">Explore our collection of stunning photographs that capture the beauty of the world
+                    around us.</p>
+                <a href="#book-shoot" class="btn">Book a Shoot</a>
+            </div>
+            <img src="images/hero/hero-field.jpg"
+                alt="Person walking across a golden hillside toward the sea under a wide, cloud-streaked sky"
+                class="hero-image">
         </section>
-        <section id="book-shoot" class="book-shoot">
-            <h2>Book a Photo Shoot</h2>
-            <p>Ready to capture your next great moment? Fill out the form below to schedule your photo session.</p>
+        <section id="gallery" class="gallery">
+            <h2>Gallery</h2>
+            <p>Explore our collection of stunning photographs.</p>
+            <div class="gallery-grid">
+                <img src="images/gallery/festival.jpg" alt="Crowd at an outdoor festival lit by the setting sun"
+                    class="gallery-item item-1">
+                <img src="images/gallery/seaside.jpg" alt="Young woman in a black coat looking out over the sea"
+                    class="gallery-item item-2">
+                <img src="images/gallery/trench-coat.jpg"
+                    alt="Woman in a beige trench coat beside her shadow on a sunlit wall" class="gallery-item item-3">
+                <img src="images/gallery/portrait-man.jpg" alt="Portrait of a smiling man with curly grey hair"
+                    class="gallery-item item-4">
+                <img src="images/gallery/valley.jpg" alt="Misty mountain valley and river at sunrise"
+                    class="gallery-item item-5">
+                <img src="images/gallery/wedding-toast.jpg" alt="Wedding guests raising glasses for a toast"
+                    class="gallery-item item-6">
+            </div>
+        </section>
+        <section id="sessions" class="sessions">
+            <h2>Sessions</h2>
+            <p>Ready to capture your next great moment? Choose a session, then book it using the form below.</p>
             <div class="product-grid">
                 <article class="product-card">
                     <img src="images/products/pexels-petemiller-35045742.jpg" alt="Portrait Photo"
@@ -63,6 +92,39 @@
                 unforgettable experience for every client.</p>
             <p>Thank you for visiting Luma Photography! We look forward to capturing your special moments together.</p>
         </section>
+        <section id="book-shoot" class="book-shoot">
+            <p class="eyebrow">Let's work together</p>
+            <h2>Book a Shoot</h2>
+            <p>Tell us a little about what you have in mind and we'll get back to you within two days.</p>
+            <form class="booking-form">
+                <div class="form-field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-field">
+                    <label for="session">Session type</label>
+                    <select id="session" name="session" required>
+                        <option value="">Choose a session</option>
+                        <option value="portrait">Portrait Session</option>
+                        <option value="wedding">Wedding Coverage</option>
+                        <option value="event">Event Photography</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="date">Preferred date</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="form-field full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">Send Request</button>
+            </form>
+        </section>
     </main>
     <footer id="contact">
         <div class="footer-grid">
@@ -73,9 +135,9 @@
             <div class="footer-links">
                 <h3>Sessions</h3>
                 <ul>
-                    <li><a href="#book-shoot">Portraits</a></li>
-                    <li><a href="#book-shoot">Weddings</a></li>
-                    <li><a href="#book-shoot">Events</a></li>
+                    <li><a href="#sessions">Portraits</a></li>
+                    <li><a href="#sessions">Weddings</a></li>
+                    <li><a href="#sessions">Events</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
