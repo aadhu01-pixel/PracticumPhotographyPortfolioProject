@@ -1,9 +1,11 @@
+import { Header } from "./components/Header";
+import { Hero } from './components/Hero';
+
 function App() {
   return (
     <div>
-      <h1 className="text-4xl font-bold text-accent">
-        Luma Photography
-      </h1>
+      <Header />
+      <Hero />
     </div>
   );
 }
