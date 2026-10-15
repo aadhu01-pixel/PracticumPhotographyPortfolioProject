@@ -13,11 +13,11 @@ export function SessionCard({ session }) {
             />
 
             <div className="p-5">
-                <h3 className="mb-2 font-['Libre_Baskerville'] text-lg">
+                <h3 className="mb-2 font-heading text-lg">
                     {session.title}
                 </h3>
 
-                <p className="mb-5 text-sm text-stone-500">
+                <p className="mb-5 text-sm text-ink-soft">
                     {session.description}
                 </p>
 
@@ -25,8 +25,8 @@ export function SessionCard({ session }) {
                     type="button"
                     onClick={() => setSelected(!selected)}
                     className={`rounded-sm border px-4 py-2 text-sm transition ${selected
-                            ? "border-amber-700 bg-amber-700 text-white"
-                            : "border-stone-300 hover:border-amber-700"
+                        ? "border-amber-700 bg-amber-700 text-white"
+                        : "border-stone-300 hover:border-amber-700"
                         }`}
                 >
                     {selected ? "Selected ✓" : "Select Session"}

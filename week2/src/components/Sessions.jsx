@@ -18,11 +18,11 @@ export function Sessions() {
             id="sessions"
             className="mx-auto max-w-[1100px] border-t border-stone-300 px-6 py-12"
         >
-            <h2 className="mb-4 font-['Libre_Baskerville'] text-3xl">
+            <h2 className="mb-4 font-heading text-3xl font-bold">
                 Sessions
             </h2>
 
-            <p className="mb-6 text-stone-500">
+            <p className="mb-6 text-ink-soft">
                 Ready to capture your next great moment? Choose a session,
                 then book it using the form below.
             </p>
@@ -34,8 +34,8 @@ export function Sessions() {
                         type="button"
                         onClick={() => setFilter(category)}
                         className={`rounded-full border px-4 py-2 text-sm transition ${filter === category
-                                ? "border-amber-700 bg-amber-700 text-white"
-                                : "border-stone-300 hover:border-amber-700"
+                            ? "border-amber-700 bg-amber-700 text-white"
+                            : "border-stone-300 hover:border-amber-700"
                             }`}
                     >
                         {category}
