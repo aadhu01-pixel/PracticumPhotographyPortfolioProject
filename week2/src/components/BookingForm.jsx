@@ -1,7 +1,7 @@
 
 export function BookingForm() {
     const fieldClass =
-        "w-full border border-line bg-surface px-3.5 py-3 text-[0.95rem] text-ink rounded-none focus:outline-none focus:border-ink-accent";
+        "w-full border border-line bg-surface px-3.5 py-3 text-[0.95rem] text-ink rounded-none focus:outline-none focus:border-accent";
 
     const labelClass =
         "text-xs uppercase tracking-[0.1em] text-ink-soft";
@@ -9,14 +9,14 @@ export function BookingForm() {
     return (
         <section
             id="book-shoot"
-            className="mx-auto grid max-w-[1100px] grid-cols-1 gap-8 border-t border-line px-6 py-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16 lg:py-20"
+            className="mx-auto grid max-w-[1100px] grid-cols-1 gap-8 border-t border-line px-6 pt-12 pb-20 lg:grid-cols-[1fr_1.6fr] lg:gap-16"
         >
             <div>
-                <p className="mb-3 text-sm uppercase tracking-widest text-accent">
+                <p className="mb-4 text-[0.8rem] uppercase tracking-[0.15em] text-accent">
                     Let's work together
                 </p>
 
-                <h2 className="mb-2 font-heading text-3xl font-bold">
+                <h2 className="mb-2 font-heading text-[1.75rem] font-bold">
                     Book a Shoot
                 </h2>
 
@@ -105,7 +105,7 @@ export function BookingForm() {
 
                 <button
                     type="submit"
-                    className="justify-self-start rounded-[3px] bg-accent font-semibold tracking-[0.1em] uppercase px-6 py-3 text-sm text-button-text transition hover:-translate-y-px hover:bg-accent-dark tracking-[0.1em]"
+                    className="mt-2 justify-self-start rounded-[3px] bg-accent px-[1.7rem] py-[0.85rem] text-[0.9rem] font-semibold tracking-[0.1em] uppercase text-button-text transition hover:-translate-y-px hover:bg-accent-dark"
                 >
                     Send Request
                 </button>
