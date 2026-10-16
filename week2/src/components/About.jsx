@@ -3,7 +3,7 @@ export function About() {
     return (
         <section
             id="about"
-            className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-8 border-t border-stone-300 px-6 py-12 lg:grid-cols-[1fr_1.4fr] lg:gap-12 lg:py-16"
+            className="mx-auto grid max-w-[1100px] grid-cols-1 items-center gap-8 border-t border-line px-6 pt-12 pb-16 lg:grid-cols-[1fr_1.4fr] lg:gap-12"
         >
             <img
                 src="/images/about/about.jpg"

@@ -28,9 +28,9 @@ const photos = [
 
 const positions = [
     "lg:col-start-1 lg:row-[1/5]",
-    "lg:col-start-2 lg:row-[1/6]",
-    "lg:col-start-3 lg:row-[1/5]",
-    "lg:col-start-1 lg:row-[5/9]",
+    "lg:col-start-2 lg:row-[1/6] object-[70%_center]",
+    "lg:col-start-3 lg:row-[1/5] object-[75%_top]",
+    "lg:col-start-1 lg:row-[5/9] object-[center_35%]",
     "lg:col-start-2 lg:row-[6/9]",
     "lg:col-start-3 lg:row-[5/9]",
 ];
@@ -39,9 +39,9 @@ export function Gallery() {
     return (
         <section
             id="gallery"
-            className="mx-auto max-w-[1100px] border-t border-border px-6 py-12"
+            className="mx-auto max-w-[1100px] border-t border-line px-6 py-12"
         >
-            <h2 className="font-heading text-3xl font-bold">Gallery</h2>
+            <h2 className="font-heading text-[1.5rem] font-bold">Gallery</h2>
             <p className="mt-3 text-ink-soft">
                 A selection of recent portraits, weddings, events and travel.
             </p>
