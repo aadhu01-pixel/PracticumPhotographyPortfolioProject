@@ -1,5 +1,6 @@
+import { sessions } from "../data/sessions";
 
-export function BookingForm() {
+export function BookingForm({ selectedSession, onSessionChange }) {
     const fieldClass =
         "w-full border border-line bg-surface px-3.5 py-3 text-[0.95rem] text-ink rounded-none focus:outline-none focus:border-accent";
 
@@ -67,15 +68,18 @@ export function BookingForm() {
                         id="session"
                         name="session"
                         required
-                        defaultValue=""
+                        value={selectedSession}
+                        onChange={(event) => onSessionChange(event.target.value)}
                         className={fieldClass}
                     >
                         <option value="" disabled>
                             Choose a session
                         </option>
-                        <option value="portrait">Portrait Session</option>
-                        <option value="wedding">Wedding Coverage</option>
-                        <option value="event">Event Photography</option>
+                        {sessions.map((session) => (
+                            <option key={session.id} value={session.category}>
+                                {session.title}
+                            </option>
+                        ))}
                     </select>
                 </div>
 

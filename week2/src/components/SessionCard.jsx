@@ -1,18 +1,20 @@
 
-import { useState } from "react";
+import { SelectToggle } from "./SelectToggle";
 
-export function SessionCard({ session }) {
-    const [selected, setSelected] = useState(false);
-
+export function SessionCard({ session, selected, onSelectChange }) {
     return (
-        <article className="overflow-hidden rounded-sm border border-stone-300">
+        <article>
             <img
                 src={session.image}
                 alt={session.alt}
                 className="aspect-[3/2] w-full object-cover"
             />
 
-            <div className="p-5">
+            <div className="pt-5">
+                <p className="mb-2 text-xs uppercase tracking-[0.15em] text-accent">
+                    {session.category}
+                </p>
+
                 <h3 className="mb-2 font-heading text-lg">
                     {session.title}
                 </h3>
@@ -21,16 +23,7 @@ export function SessionCard({ session }) {
                     {session.description}
                 </p>
 
-                <button
-                    type="button"
-                    onClick={() => setSelected(!selected)}
-                    className={`rounded-sm border px-4 py-2 text-sm transition ${selected
-                        ? "border-amber-700 bg-amber-700 text-white"
-                        : "border-stone-300 hover:border-amber-700"
-                        }`}
-                >
-                    {selected ? "Selected ✓" : "Select Session"}
-                </button>
+                <SelectToggle selected={selected} onChange={onSelectChange} />
             </div>
         </article>
     );
