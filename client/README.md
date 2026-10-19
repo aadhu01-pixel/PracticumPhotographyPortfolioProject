@@ -15,7 +15,7 @@ React 19, Vite, Tailwind CSS 4
 ## Running it
 
 ```bash
-cd week2
+cd client
 npm install
 npm run dev
 ```

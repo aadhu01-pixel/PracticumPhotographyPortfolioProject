@@ -4,8 +4,8 @@ A landing page for a small photography studio, built while learning HTML, CSS, J
 
 ## Status
 
-- Week 1: static HTML/CSS landing page (root folder)
-- Week 2: rebuilt in React and Tailwind (`week2` folder)
+- Week 1: static HTML/CSS landing page (`week1` folder)
+- Week 2: rebuilt in React and Tailwind (`client` folder)
 
 ## Features
 
@@ -20,13 +20,13 @@ React 19, Vite, Tailwind CSS 4
 ## Running it
 
 ```bash
-cd week2
+cd client
 npm install
 npm run dev
 ```
 
 ## Structure
 
-- `week2/src/App.jsx`: puts the page together and holds the selected session state
-- `week2/src/components/`: one component per page section, plus `SessionCard` and `SelectToggle`
-- `week2/src/data/sessions.js`: the session data, used by both the cards and the form
+- `client/src/App.jsx`: puts the page together and holds the selected session state
+- `client/src/components/`: one component per page section, plus `SessionCard` and `SelectToggle`
+- `client/src/data/sessions.js`: the session data, used by both the cards and the form
