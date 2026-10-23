@@ -1,6 +1,4 @@
-import { sessions } from "../data/sessions";
-
-export function BookingForm({ selectedSession, onSessionChange }) {
+export function BookingForm({ sessions, selectedSession, onSessionChange }) {
     const fieldClass =
         "w-full border border-line bg-surface px-3.5 py-3 text-[0.95rem] text-ink rounded-none focus:outline-none focus:border-accent";
 

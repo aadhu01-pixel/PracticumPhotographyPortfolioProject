@@ -5,8 +5,8 @@ export function SessionCard({ session, selected, onSelectChange }) {
     return (
         <article>
             <img
-                src={session.image}
-                alt={session.alt}
+                src={session.imageUrl}
+                alt={session.imageAlt}
                 className="aspect-[3/2] w-full object-cover"
             />
 

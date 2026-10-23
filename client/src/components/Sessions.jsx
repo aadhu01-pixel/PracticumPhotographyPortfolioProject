@@ -1,11 +1,11 @@
 
 import { useState } from "react";
-import { sessions } from "../data/sessions";
 import { SessionCard } from "./SessionCard";
 
 const categories = ["All", "Portrait", "Wedding", "Event"];
 
-export function Sessions({ selectedSession, onSelectSession }) {
+// sessions come from the API (loaded in App.jsx)
+export function Sessions({ sessions, loading, error, selectedSession, onSelectSession }) {
     const [filter, setFilter] = useState("All");
 
     const filteredSessions =
@@ -43,6 +43,9 @@ export function Sessions({ selectedSession, onSelectSession }) {
                     </button>
                 ))}
             </div>
+
+            {loading && <p className="text-ink-soft">Loading sessions...</p>}
+            {error && <p role="alert" className="text-accent-dark">{error}</p>}
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredSessions.map((session) => (
