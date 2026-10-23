@@ -4,6 +4,7 @@ import cors from 'cors'
 import { toNodeHandler } from 'better-auth/node'
 import { auth } from './auth.js'
 import { sessionsRouter } from './routes/sessions.js'
+import { photosRouter } from './routes/photos.js'
 
 const app = express()
 const PORT = Number(process.env.PORT ?? 3000)
@@ -22,6 +23,7 @@ app.all('/api/auth/*splat', toNodeHandler(auth))
 app.use(express.json())
 
 app.use('/api/sessions', sessionsRouter)
+app.use('/api/photos', photosRouter)
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, time: new Date().toISOString() })

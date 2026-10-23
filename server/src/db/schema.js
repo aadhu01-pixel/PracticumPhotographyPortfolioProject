@@ -1,4 +1,4 @@
-import { pgTable, text, boolean, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
+import { pgTable, text, integer, boolean, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
 
 // --- Auth tables (managed by better-auth) ---
 
@@ -61,9 +61,21 @@ export const photoSessions = pgTable(
     title: text('title').notNull(),
     category: text('category').notNull(),
     description: text('description').notNull(),
+    duration: text('duration').notNull(),
+    deliverables: text('deliverables').notNull(),
     imageUrl: text('image_url').notNull(),
     imageAlt: text('image_alt').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => [uniqueIndex('photo_sessions_slug_idx').on(table.slug)],
 )
+
+// Every photo shown on the site. The homepage gallery shows all of them;
+// a session's page shows only the ones linked to it (sessionId is null for photos like landscapes).
+export const photos = pgTable('photos', {
+  id: text('id').primaryKey(),
+  sessionId: text('session_id').references(() => photoSessions.id, { onDelete: 'set null' }),
+  url: text('url').notNull().unique(),
+  alt: text('alt').notNull(),
+  sortOrder: integer('sort_order').notNull().default(0),
+})

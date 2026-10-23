@@ -1,31 +1,6 @@
+import { useState, useEffect } from "react";
 
-const photos = [
-    {
-        src: "/images/gallery/festival.jpg",
-        alt: "Crowd at an outdoor festival lit by the setting sun",
-    },
-    {
-        src: "/images/gallery/seaside.jpg",
-        alt: "Young woman in a black coat looking out over the sea",
-    },
-    {
-        src: "/images/gallery/trench-coat.jpg",
-        alt: "Woman in a beige trench coat beside her shadow on a sunlit wall",
-    },
-    {
-        src: "/images/gallery/portrait-man.jpg",
-        alt: "Portrait of a smiling man with curly grey hair",
-    },
-    {
-        src: "/images/gallery/valley.jpg",
-        alt: "Misty mountain valley and river at sunrise",
-    },
-    {
-        src: "/images/gallery/wedding-toast.jpg",
-        alt: "Wedding guests raising glasses for a toast",
-    },
-];
-
+// layout for each grid slot, in gallery order (the photos themselves come from the API)
 const positions = [
     "lg:col-start-1 lg:row-[1/5]",
     "lg:col-start-2 lg:row-[1/6] object-[70%_center]",
@@ -36,6 +11,24 @@ const positions = [
 ];
 
 export function Gallery() {
+    const [photos, setPhotos] = useState([]);
+    const [error, setError] = useState(null);
+
+    // only the gallery uses these photos, so it loads them itself
+    useEffect(() => {
+        async function loadPhotos() {
+            try {
+                const response = await fetch("/api/photos");
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                setPhotos(await response.json());
+            } catch (err) {
+                console.error("Failed to load photos", err);
+                setError("The gallery couldn't be loaded. Please try again later.");
+            }
+        }
+        loadPhotos();
+    }, []);
+
     return (
         <section
             id="gallery"
@@ -46,13 +39,15 @@ export function Gallery() {
                 A selection of recent portraits, weddings, events and travel.
             </p>
 
+            {error && <p role="alert" className="mt-8 text-accent-dark">{error}</p>}
+
             <div className="mt-8 grid grid-cols-2 auto-rows-[180px] gap-3 sm:auto-rows-[260px] sm:gap-4 lg:h-[640px] lg:grid-cols-[1fr_1.4fr_1fr] lg:grid-rows-8 lg:gap-4">
                 {photos.map((photo, index) => (
                     <img
-                        key={photo.src}
-                        src={photo.src}
+                        key={photo.id}
+                        src={photo.url}
                         alt={photo.alt}
-                        className={`h-full w-full object-cover ${positions[index]}`}
+                        className={`h-full w-full object-cover ${positions[index] ?? ""}`}
                     />
                 ))}
             </div>

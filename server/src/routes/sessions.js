@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { eq } from 'drizzle-orm'
 import { db } from '../db/index.js'
-import { photoSessions } from '../db/schema.js'
+import { photoSessions, photos } from '../db/schema.js'
 
 export const sessionsRouter = Router()
 
@@ -11,7 +11,7 @@ sessionsRouter.get('/', async (_req, res) => {
   res.json(rows)
 })
 
-// GET /api/sessions/:slug - one photo session, e.g. /api/sessions/portrait-session
+// GET /api/sessions/:slug - one photo session with its photos, e.g. /api/sessions/portrait-session
 sessionsRouter.get('/:slug', async (req, res) => {
   const [row] = await db
     .select()
@@ -20,5 +20,12 @@ sessionsRouter.get('/:slug', async (req, res) => {
     .limit(1)
 
   if (!row) return res.status(404).json({ error: 'No such session' })
-  res.json(row)
+
+  const sessionPhotos = await db
+    .select()
+    .from(photos)
+    .where(eq(photos.sessionId, row.id))
+    .orderBy(photos.sortOrder)
+
+  res.json({ ...row, photos: sessionPhotos })
 })
