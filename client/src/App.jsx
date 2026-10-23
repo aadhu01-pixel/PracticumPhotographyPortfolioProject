@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, useSearchParams } from "react-router";
 import { Header } from "./components/Header";
 import { Hero } from './components/Hero';
 import { Gallery } from "./components/Gallery";
@@ -8,14 +8,19 @@ import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { BookingForm } from "./components/BookingForm";
 import { Login } from "./components/Login";
+import { SessionDetail } from "./components/SessionDetail";
 
 function Home() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // ?session=Portrait comes from "Book this session" on a session's page
+  const [searchParams] = useSearchParams();
+  const sessionFromUrl = searchParams.get("session");
+
   // the chosen session's category ("" = none), shared by the cards and the form
-  const [selectedSession, setSelectedSession] = useState("");
+  const [selectedSession, setSelectedSession] = useState(sessionFromUrl ?? "");
 
   // load the sessions from the API once, then share them with the cards and the form
   useEffect(() => {
@@ -33,6 +38,13 @@ function Home() {
     }
     loadSessions();
   }, []);
+
+  // once the sessions are on the page, take the visitor to the form with their session chosen
+  useEffect(() => {
+    if (!loading && sessionFromUrl) {
+      document.getElementById("book-shoot").scrollIntoView({ behavior: "smooth" });
+    }
+  }, [loading, sessionFromUrl]);
 
   return (
     <>
@@ -63,6 +75,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login mode="signin" />} />
         <Route path="/signup" element={<Login mode="signup" />} />
+        <Route path="/sessions/:slug" element={<SessionDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>
