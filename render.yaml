@@ -1,0 +1,24 @@
+# Render deploy config for the Express API (server/).
+# Secrets are marked sync: false, so they are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: luma-server
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        sync: false
+      - key: BETTER_AUTH_URL
+        sync: false
+      - key: CLIENT_URL
+        sync: false
