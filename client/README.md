@@ -1,27 +1,25 @@
-# Luma Photography (Week 2)
+# Luma Photography: client
 
-A landing page for a small photography studio. It's the Week 1 HTML/CSS site rebuilt in React and Tailwind.
-
-## Features
-
-- Responsive layout with a sticky header, hero, gallery, sessions, about section, booking form and footer
-- Filter sessions by category (Portrait, Wedding, Event)
-- Selecting a session scrolls to the booking form with that session already chosen, and the dropdown and the cards stay in sync
+The React frontend. See the [main README](../README.md) for the whole project, the API and the database.
 
 ## Tech
 
-React 19, Vite, Tailwind CSS 4
+React 19, Vite, Tailwind CSS 4, React Router, better-auth (client)
 
 ## Running it
 
+Start the server first (see `../server`), then:
+
 ```bash
-cd client
 npm install
 npm run dev
 ```
 
+Vite forwards `/api` requests to the server on `http://localhost:3000`.
+
 ## Structure
 
-- `src/App.jsx`: puts the page together and holds the selected session state
-- `src/components/`: one component per page section, plus `SessionCard` and `SelectToggle`
-- `src/data/sessions.js`: the session data, used by both the cards and the form
+- `src/App.jsx`: the routes (`/`, `/login`, `/signup`, `/sessions/:slug`); `Home` fetches the sessions and shares them with the cards and the booking form
+- `src/components/`: one component per page section, plus `Login`, `SessionDetail`, `SessionCard` and `SelectToggle`
+- `src/lib/auth-client.js`: the better-auth client used for sign up, sign in, sign out and `useSession`
+- `vercel.json`: forwards `/api/*` to the Render server and serves `index.html` for every page
