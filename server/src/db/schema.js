@@ -63,6 +63,8 @@ export const photoSessions = pgTable(
     description: text('description').notNull(),
     duration: text('duration').notNull(),
     deliverables: text('deliverables').notNull(),
+    // whole cents (25000 = $250.00) so there are no decimal rounding errors; Stripe also uses cents
+    priceCents: integer('price_cents').notNull().default(0),
     imageUrl: text('image_url').notNull(),
     imageAlt: text('image_alt').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -78,4 +80,28 @@ export const photos = pgTable('photos', {
   url: text('url').notNull().unique(),
   alt: text('alt').notNull(),
   sortOrder: integer('sort_order').notNull().default(0),
+})
+
+// One row per purchase. Starts as "pending"; only the Stripe webhook changes it to "paid".
+export const orders = pgTable('orders', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => user.id),
+  status: text('status').notNull().default('pending'),
+  totalCents: integer('total_cents').notNull(),
+  currency: text('currency').notNull().default('usd'),
+  // filled in right after the Stripe Checkout Session is created
+  stripeSessionId: text('stripe_session_id').unique(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  paidAt: timestamp('paid_at'),
+})
+
+// What was bought in an order. Title and price are copied at purchase time,
+// so changing a session's price later doesn't rewrite old orders.
+export const orderItems = pgTable('order_items', {
+  id: text('id').primaryKey(),
+  orderId: text('order_id').notNull().references(() => orders.id, { onDelete: 'cascade' }),
+  sessionId: text('session_id').references(() => photoSessions.id, { onDelete: 'set null' }),
+  title: text('title').notNull(),
+  priceCents: integer('price_cents').notNull(),
+  quantity: integer('quantity').notNull().default(1),
 })

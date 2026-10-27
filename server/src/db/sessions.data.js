@@ -6,6 +6,7 @@ export const sessionsData = [
     description: 'Professional portrait photography in a beautiful natural setting.',
     duration: '1-2 hours',
     deliverables: '30+ edited high-resolution photos, delivered within 1 week',
+    priceCents: 25000, // $250
     imageUrl: '/images/products/pexels-petemiller-35045742.jpg',
     imageAlt: 'Portrait Photo',
   },
@@ -16,6 +17,7 @@ export const sessionsData = [
     description: 'Full-day wedding photography to capture all the special moments.',
     duration: 'Up to 10 hours',
     deliverables: '400+ edited high-resolution photos and an online gallery, delivered within 4 weeks',
+    priceCents: 250000, // $2,500
     imageUrl: '/images/products/jose-nicdao-I56x7QeaZs8-unsplash.jpg',
     imageAlt: 'Wedding Photo',
   },
@@ -26,6 +28,7 @@ export const sessionsData = [
     description: 'Capturing the essence of your event with high-quality images.',
     duration: '2-6 hours',
     deliverables: '100+ edited high-resolution photos, delivered within 2 weeks',
+    priceCents: 60000, // $600
     imageUrl: '/images/products/pablo-heimplatz-ZODcBkEohk8-unsplash.jpg',
     imageAlt: 'Event Photo',
   },
