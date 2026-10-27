@@ -5,6 +5,7 @@ import { toNodeHandler } from 'better-auth/node'
 import { auth } from './auth.js'
 import { sessionsRouter } from './routes/sessions.js'
 import { photosRouter } from './routes/photos.js'
+import { checkoutRouter } from './routes/checkout.js'
 
 const app = express()
 const PORT = Number(process.env.PORT ?? 3000)
@@ -24,6 +25,7 @@ app.use(express.json())
 
 app.use('/api/sessions', sessionsRouter)
 app.use('/api/photos', photosRouter)
+app.use('/api/checkout', checkoutRouter)
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, time: new Date().toISOString() })
