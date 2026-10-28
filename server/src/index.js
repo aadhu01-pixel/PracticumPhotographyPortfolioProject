@@ -6,6 +6,7 @@ import { auth } from './auth.js'
 import { sessionsRouter } from './routes/sessions.js'
 import { photosRouter } from './routes/photos.js'
 import { checkoutRouter } from './routes/checkout.js'
+import { webhooksRouter } from './routes/webhooks.js'
 
 const app = express()
 const PORT = Number(process.env.PORT ?? 3000)
@@ -20,6 +21,9 @@ app.use(
 
 // better-auth needs the raw request body, so it's mounted before express.json()
 app.all('/api/auth/*splat', toNodeHandler(auth))
+
+// Stripe webhooks also need the raw body (to check Stripe's signature), so they're mounted here too
+app.use('/api/webhooks', webhooksRouter)
 
 app.use(express.json())
 
