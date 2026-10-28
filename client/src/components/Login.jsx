@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, useSearchParams, Link } from "react-router";
 import { signIn, signUp } from "../lib/auth-client";
 
 // one page for both forms: mode is "signin" or "signup"
@@ -9,6 +9,15 @@ export function Login({ mode }) {
     const [busy, setBusy] = useState(false);
 
     const isSignup = mode === "signup";
+
+    // ?redirect=/sessions/... sends the visitor back after signing in.
+    // Only paths on our own site are allowed ("//evil.com" would leave it), anything else goes home.
+    const [searchParams] = useSearchParams();
+    const redirectParam = searchParams.get("redirect");
+    const redirectTo =
+        redirectParam?.startsWith("/") && !redirectParam.startsWith("//") ? redirectParam : "/";
+    // keep the redirect when switching between the sign-in and sign-up forms
+    const redirectQuery = redirectTo === "/" ? "" : `?redirect=${encodeURIComponent(redirectTo)}`;
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -31,7 +40,7 @@ export function Login({ mode }) {
                 return;
             }
 
-            navigate("/");
+            navigate(redirectTo);
         } catch {
             setError("Something went wrong. Please try again.");
         } finally {
@@ -89,9 +98,9 @@ export function Login({ mode }) {
 
             <p className="mt-6 text-center text-sm text-ink-soft">
                 {isSignup ? (
-                    <>Already have an account? <Link to="/login" className="text-accent underline">Sign in</Link></>
+                    <>Already have an account? <Link to={`/login${redirectQuery}`} className="text-accent underline">Sign in</Link></>
                 ) : (
-                    <>New here? <Link to="/signup" className="text-accent underline">Create an account</Link></>
+                    <>New here? <Link to={`/signup${redirectQuery}`} className="text-accent underline">Create an account</Link></>
                 )}
             </p>
         </section>

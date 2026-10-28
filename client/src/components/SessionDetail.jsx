@@ -1,13 +1,57 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
+import { useSession } from "../lib/auth-client";
+
+// 25000 cents -> "$250"
+function formatPrice(cents) {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+    }).format(cents / 100);
+}
 
 // the page for one session, e.g. /sessions/portrait-session
 export function SessionDetail() {
     const { slug } = useParams();
+    const navigate = useNavigate();
     const [session, setSession] = useState(null);
     const [loading, setLoading] = useState(true);
     const [notFound, setNotFound] = useState(false);
     const [activeImage, setActiveImage] = useState(null);
+    const [redirecting, setRedirecting] = useState(false);
+    const [checkoutError, setCheckoutError] = useState(null);
+
+    // the logged-in user (named authSession so it doesn't clash with the photo session above)
+    const { data: authSession } = useSession();
+
+    async function handleBookNow() {
+        // every order needs a signed-in user: sign in first, then come back to this page
+        if (!authSession?.user) {
+            navigate(`/login?redirect=${encodeURIComponent(`/sessions/${slug}`)}`);
+            return;
+        }
+
+        setCheckoutError(null);
+        setRedirecting(true);
+        try {
+            // only the session's id is sent - the server looks up the price itself
+            const response = await fetch("/api/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sessionId: session.id }),
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const { url } = await response.json();
+            // Stripe's payment page is another website, so leave the React app
+            window.location.href = url;
+        } catch (err) {
+            console.error("Checkout failed", err);
+            setCheckoutError("We couldn't start the checkout. Please try again.");
+            setRedirecting(false);
+        }
+    }
 
     useEffect(() => {
         // start at the top, not wherever the visitor was on the home page
@@ -103,15 +147,36 @@ export function SessionDetail() {
                         <dt className="text-xs uppercase tracking-[0.1em] text-ink-soft">What you get</dt>
                         <dd className="mt-1">{session.deliverables}</dd>
                     </div>
+                    <div>
+                        <dt className="text-xs uppercase tracking-[0.1em] text-ink-soft">Price</dt>
+                        <dd className="mt-1">{formatPrice(session.priceCents)}</dd>
+                    </div>
                 </dl>
 
-                {/* the home page reads ?session= and preselects it in the booking form */}
-                <Link
-                    to={`/?session=${encodeURIComponent(session.category)}`}
-                    className="mt-8 inline-block rounded-[3px] bg-accent px-[1.7rem] py-[0.85rem] text-[0.9rem] font-semibold tracking-[0.1em] uppercase text-button-text transition hover:-translate-y-px hover:bg-accent-dark"
-                >
-                    Book this session
-                </Link>
+                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+                    <button
+                        type="button"
+                        onClick={handleBookNow}
+                        disabled={redirecting}
+                        className="cursor-pointer rounded-[3px] bg-accent px-[1.7rem] py-[0.85rem] text-[0.9rem] font-semibold tracking-[0.1em] uppercase text-button-text transition hover:-translate-y-px hover:bg-accent-dark disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                        {redirecting ? "Redirecting to checkout..." : `Book now — ${formatPrice(session.priceCents)}`}
+                    </button>
+
+                    {/* the home page reads ?session= and preselects it in the booking form */}
+                    <Link
+                        to={`/?session=${encodeURIComponent(session.category)}`}
+                        className="text-[0.95rem] text-accent underline"
+                    >
+                        Send an enquiry
+                    </Link>
+                </div>
+
+                {checkoutError && (
+                    <p role="alert" className="mt-4 border border-accent bg-surface px-3.5 py-3 text-sm text-accent-dark">
+                        {checkoutError}
+                    </p>
+                )}
             </div>
         </section>
     );

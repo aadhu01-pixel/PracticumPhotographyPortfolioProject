@@ -11,6 +11,8 @@ export const webhooksRouter = Router()
 // express.raw keeps the body as the exact bytes Stripe signed (express.json would change them).
 webhooksRouter.post('/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
   let event
+
+  // Verify the Stripe webhook signature. If it doesn't match, reject the request,else continue, otherwise anyone could call this endpoint and mark orders as paid.
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
