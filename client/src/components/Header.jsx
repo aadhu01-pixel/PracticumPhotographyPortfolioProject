@@ -10,7 +10,12 @@ export function Header() {
     return (
         <header className="sticky top-0 z-10 border-b border-line bg-bg">
             <nav className="mx-auto flex max-w-[1100px] flex-col items-center gap-3 p-4 sm:flex-row sm:justify-between sm:gap-0 sm:px-6">
-                <Link to="/" className="text-xl font-bold font-heading">
+                {/* Link changes the URL but doesn't scroll, so go back to the top ourselves */}
+                <Link
+                    to="/"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    className="text-xl font-bold font-heading"
+                >
                     Luma <span className="text-accent">Photography</span>
                 </Link>
 
