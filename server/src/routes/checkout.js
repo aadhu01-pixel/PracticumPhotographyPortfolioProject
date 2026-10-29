@@ -63,7 +63,8 @@ checkoutRouter.post('/', requireAuth, async (req, res) => {
     // Stripe sends this back in the webhook, so we know which order was paid
     metadata: { orderId },
     success_url: `${clientUrl}/checkout/success?order=${orderId}`,
-    cancel_url: `${clientUrl}/sessions/${photoSession.slug}`,
+    // the session page reads ?canceled=true and shows a "you weren't charged" note
+    cancel_url: `${clientUrl}/sessions/${photoSession.slug}?canceled=true`,
   })
 
   await db.update(orders).set({ stripeSessionId: checkoutSession.id }).where(eq(orders.id, orderId))

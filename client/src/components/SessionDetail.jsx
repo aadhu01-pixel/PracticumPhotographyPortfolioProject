@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router";
+import { useParams, useNavigate, useSearchParams, Link } from "react-router";
 import { useSession } from "../lib/auth-client";
-
-// 25000 cents -> "$250"
-function formatPrice(cents) {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-    }).format(cents / 100);
-}
+import { formatPrice } from "../lib/format";
 
 // the page for one session, e.g. /sessions/portrait-session
 export function SessionDetail() {
@@ -21,6 +13,10 @@ export function SessionDetail() {
     const [activeImage, setActiveImage] = useState(null);
     const [redirecting, setRedirecting] = useState(false);
     const [checkoutError, setCheckoutError] = useState(null);
+
+    // Stripe sends the visitor back here with ?canceled=true if they leave the payment page
+    const [searchParams] = useSearchParams();
+    const checkoutCanceled = searchParams.get("canceled") === "true";
 
     // the logged-in user (named authSession so it doesn't clash with the photo session above)
     const { data: authSession } = useSession();
@@ -171,6 +167,12 @@ export function SessionDetail() {
                         Send an enquiry
                     </Link>
                 </div>
+
+                {checkoutCanceled && !checkoutError && (
+                    <p role="status" className="mt-4 border border-line bg-surface px-3.5 py-3 text-sm text-ink-soft">
+                        Checkout was canceled, so you haven't been charged. You can book again whenever you're ready.
+                    </p>
+                )}
 
                 {checkoutError && (
                     <p role="alert" className="mt-4 border border-accent bg-surface px-3.5 py-3 text-sm text-accent-dark">

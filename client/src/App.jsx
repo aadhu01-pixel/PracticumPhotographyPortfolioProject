@@ -9,6 +9,7 @@ import { Footer } from "./components/Footer";
 import { BookingForm } from "./components/BookingForm";
 import { Login } from "./components/Login";
 import { SessionDetail } from "./components/SessionDetail";
+import { CheckoutSuccess } from "./components/CheckoutSuccess";
 
 function Home() {
   const [sessions, setSessions] = useState([]);
@@ -76,6 +77,7 @@ function App() {
         <Route path="/login" element={<Login mode="signin" />} />
         <Route path="/signup" element={<Login mode="signup" />} />
         <Route path="/sessions/:slug" element={<SessionDetail />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
       </Routes>
       <Footer />
     </BrowserRouter>
