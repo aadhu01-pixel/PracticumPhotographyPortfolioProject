@@ -22,3 +22,8 @@ services:
         sync: false
       - key: CLIENT_URL
         sync: false
+      # Stripe test-mode keys: sk_test_... from API keys, whsec_... from the dashboard webhook endpoint
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
